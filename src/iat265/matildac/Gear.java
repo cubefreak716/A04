@@ -9,6 +9,8 @@ public class Gear extends PApplet{
 	float xPos, yPos;
 	PVector pos, end; 	
 	
+	float rotS; 
+	
 	float radius; 
 	Gear left, right;
 	Belt b; 
@@ -28,6 +30,7 @@ public class Gear extends PApplet{
 		radius = r;
 		cou = color(125);	
 		sw = 1; 
+		rotS = 1; 
 
 		if(depth<4) {
 			//println(depth);
@@ -56,6 +59,7 @@ public class Gear extends PApplet{
 		p.pushMatrix();
 		p.pushStyle();
 			p.translate(xPos, yPos);
+			p.rotate(rotS); 
 			p.stroke(cou); 		
 			p.strokeWeight(sw); 
 			p.ellipse(0, 0, 2*radius, 2*radius);
@@ -64,6 +68,7 @@ public class Gear extends PApplet{
 			p.line(0, 0, -radius, 0);
 			p.line(0, 0, 0, -radius);
 			p.ellipse(0,0,radius,radius);
+			//rotS+= 0.1; 
 		p.popStyle();
 		p.popMatrix();
 

@@ -6,14 +6,24 @@ import controlP5.*;
 
 public class mainRun extends PApplet{
 	
-	Gear rrr; 
-	Gear selected; 
+//	Gear rrr; 
+//	Gear selected; 
+	Gear_New all; 
+	Gear_New selected; 
+	Gear_New prev; 
 	ControlP5 cp5;
+	
+	
 
 	Slider sizeSlider, strSlider;
 	Slider rSlider,gSlider, bSlider;
 	Slider xSlider, ySlider;
 	Button clearGear;
+	Textfield text; 
+	Bang sub; 
+	
+	
+	String input; 
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -26,15 +36,18 @@ public class mainRun extends PApplet{
 
     public void setup(){
     	cp5 = new ControlP5(this);    	
-    	rrr = new Gear(this, 340, 200, 40, 1);
+    	all = new Gear_New(this, 340, 200, 40, 1);
     	initUI();
+    	
+    	//put this elsewhere later
+  
     }
 
     public void draw(){
     	background(255);
     	
     	//draw gears
-    	rrr.drawMe(); 
+    	all.draw(); 
     	
     	//draw side bar
     	pushStyle();
@@ -81,6 +94,15 @@ public class mainRun extends PApplet{
     	 ySlider = createSlider("yposition", "Y Pos", 80,190,0, height);
     	 strSlider = createSlider("strokeS", "Weight", 80,30,1, 5); 
     	 clearGear = createButton("save","Save", 20,700);
+     	 cp5.addTextfield("textInput_1").setPosition(20, 570).setSize(100, 40).setAutoClear(false);
+     	 cp5.addBang("Submit").setPosition(20, 620).setSize(100, 30);  
+    }
+    
+    public void Submit() {
+    	input = cp5.get(Textfield.class,"textInput_1").getText();
+    	selected.setName(input);
+    	println("Changed name to: "+ input); 
+    	input = null; 
     }
     
     public void strokeS(float sW) {
@@ -127,8 +149,8 @@ public class mainRun extends PApplet{
     }
     
     public void mousePressed() {
-    	if(mouseX>200) {
-    		selected = rrr.pickMe(mouseX, mouseY);
+    	if(mouseX>200) {    		
+    		selected = all.pickMe(mouseX, mouseY);
     		if(selected != null) {
     			strSlider.setValue(selected.sw);
     			sizeSlider.setValue(selected.radius);
@@ -137,6 +159,8 @@ public class mainRun extends PApplet{
     			bSlider.setValue(blue(selected.cou));
     			xSlider.setValue(selected.xPos);
     			ySlider.setValue(selected.yPos);
+    			println("Current Gear Name: "+selected.getName()); 
+    			
     		}
     	}
     }
