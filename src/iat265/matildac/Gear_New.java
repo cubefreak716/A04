@@ -144,8 +144,8 @@ public class Gear_New extends PApplet implements Scrubbable {
 	}
 	
 	Gear_New pickMe(float MX, float MY) {
-		if(MX<xPos+radius && MX>xPos-radius && MY<yPos+radius && MY>yPos-radius) {
-			println(" selected ");
+		if(MX < xPos+radius && MX > xPos-radius && MY < yPos+radius && MY > yPos-radius) {
+			println("selected");
 			return this; 
 		}
 		else {
