@@ -6,16 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import controlP5.*;
-//import interfacelib.*;
 
 public class mainRun extends PApplet{
 	
-//	Gear rrr; 
-//	Gear selected; 
 	Gear_New all; 
 	Gear_New selected; 
-	ControlP5 cp5;
-	
+	ControlP5 cp5;	
 	
 	//P5 stuff
 	Slider sizeSlider, strSlider;
@@ -28,7 +24,6 @@ public class mainRun extends PApplet{
 	ArrayList<Gear_New> allGear;
 	
 //	Iterator<Gear_New> itGear = all.Iterator(); 
-	
 	
 	String input; 
 
@@ -47,6 +42,10 @@ public class mainRun extends PApplet{
     	initUI();  
     	all.setParameter("red", 255);
     	println("here:  "+ all.getParameter("Width"));
+    	println("length: " + all.getProperties().length) ;
+    	for(int o= 0; o <all.getProperties().length; o++) {
+    		println("Property " + (o+1) + "  " + all.getProperties()[o]); 
+    	}
     	
     }
 

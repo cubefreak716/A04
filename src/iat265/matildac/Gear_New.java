@@ -19,7 +19,6 @@ public class Gear_New extends PApplet implements Scrubbable {
 	float radius; //width
 	Gear_New left, right; //next gears
 	Belt B; 	//belt
-	int cou; //colour
 	float r, g, b; 
 	float sw; //stroke weight
 	
@@ -30,7 +29,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 	float xP, yP; 
 	
 	String [] properties; 
-	int numProp = 8;  
+	int numProp = 9;  
 	
 	String n ; 
 	
@@ -46,6 +45,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 		properties[5] = "XPos";
 		properties[6] = "YPos"; 
 		properties[7] = "Name"; 
+		properties[8] = "Rotation"; 
 		
 		p = parent;
 		xPos = x;
@@ -63,22 +63,16 @@ public class Gear_New extends PApplet implements Scrubbable {
 			//println(depth);
 			if(depth==3) {
 				left = new Gear_New(p,xPos-40,yPos-180, radius, depth+1);
-//				allGear.add(left); 
 			}
 			else if(depth==1) {
 				left = new Gear_New(p,xPos+60,yPos+200, (float) (radius * 0.7), depth+1);
-//				allGear.add(left); 
 			}
 			else if(depth == 2) {
 				left = new Gear_New(p,xPos+120,yPos+50, (float) (radius * 0.5), depth+1);	
-//				allGear.add(left); 
-				right = new Gear_New(p,xPos-80,yPos+120, (float) (radius * 0.5), 5);
-//				allGear.add(right); 
-				
+				right = new Gear_New(p,xPos-80,yPos+120, (float) (radius * 0.5), 5);				
 			}
 			else if(depth == 0) { //first gear
-				left = new Gear_New(p,xPos,yPos, 50, depth+1);
-//				allGear.add(left); 
+				left = new Gear_New(p,xPos,yPos, 50, depth+1); 
 				
 			}
 			
@@ -88,8 +82,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 	}
 	
 	public String getName() {
-		return(n + "  " );
-		
+		return(n + "  " );		
 	}
 	
 	public void setName(String name) {
@@ -97,7 +90,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 	}
 	
 	public String[] getProperties() {
-		return new String[10];
+		return properties;
 	}
 	
 	public void setParameter(String name, float value) {
@@ -107,8 +100,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 				println("Found it"); 
 				c = i; 
 			}
-		}
-		
+		}		
 		switch(c) {
 		  case 0: 
 			  sw = value; 
@@ -133,14 +125,14 @@ public class Gear_New extends PApplet implements Scrubbable {
 			  break;
 		  case 7:
 			  n = str(value); 
-			  break;		
-		  default:             // Default executes if the case labels
-		    println("None");   // don't match the switch parameter
+			  break;
+		  case 8:
+			  rotS = value; 
+			  break;
+		  default:             
+		    println("None");   
 		    break;
-		}
-
-		
-		
+		}	
 	}
 	
 	public float getParameter(String name) {
@@ -172,6 +164,9 @@ public class Gear_New extends PApplet implements Scrubbable {
 		}
 		else if(name.equals("YPos")) {
 			return yPos;
+		}
+		else if(name.equals("Rotation")) {
+			return rotS; 
 		}
 		else {
 			return 0; 
@@ -215,10 +210,10 @@ public class Gear_New extends PApplet implements Scrubbable {
 		else {
 			Gear_New g =  null; 
 			if(left!= null) {
-				g = left.pickMe(mouseX, mouseY);
+				g = (Gear_New) left.pick(mouseX, mouseY);
 			}
 			if(g==null && right!= null) {
-				g = right.pickMe(mouseX, mouseY);
+				g = (Gear_New) right.pick(mouseX, mouseY);
 			}
 			if(g!=null) {
 				return g;
@@ -236,33 +231,32 @@ public class Gear_New extends PApplet implements Scrubbable {
 		return new mIterator(allGear); 
 	}
 	
-	Gear_New pickMe(float MX, float MY) {
-		if(MX < xPos+radius && MX > xPos-radius && MY < yPos+radius && MY > yPos-radius) {
-			println("selected");
-			return this; 
-		}
-		else {
-			Gear_New g =  null; 
-			if(left!= null) {
-				g = left.pickMe(MX, MY);
-			}
-			if(g==null && right!= null) {
-				g = right.pickMe(MX, MY);
-			}
-			if(g!=null) {
-				return g;
-			}
-			else {
-				return null; 
-			}
-		}
-	}
+//	Gear_New pickMe(float MX, float MY) {
+//		if(MX < xPos+radius && MX > xPos-radius && MY < yPos+radius && MY > yPos-radius) {
+//			println("selected");
+//			return this; 
+//		}
+//		else {
+//			Gear_New g =  null; 
+//			if(left!= null) {
+//				g = left.pickMe(MX, MY);
+//			}
+//			if(g==null && right!= null) {
+//				g = right.pickMe(MX, MY);
+//			}
+//			if(g!=null) {
+//				return g;
+//			}
+//			else {
+//				return null; 
+//			}
+//		}
+//	}
 	
 	public void tangency(Gear_New rec) {
 		if(radius == rec.radius) {
 	    	angle = atan((yPos-rec.yPos)/(xPos-rec.xPos));
-	    	
-//	    	println(angle); 
+	    	 
 	    	x1 = xPos+radius*sin(angle);
 	    	x2 = xPos-radius*sin(angle);
 	    	y1 = yPos-radius*cos(angle);
