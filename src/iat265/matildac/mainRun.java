@@ -1,6 +1,10 @@
 package iat265.matildac;
 
 import processing.core.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import controlP5.*;
 //import interfacelib.*;
 
@@ -10,17 +14,20 @@ public class mainRun extends PApplet{
 //	Gear selected; 
 	Gear_New all; 
 	Gear_New selected; 
-	Gear_New prev; 
 	ControlP5 cp5;
 	
 	
-
+	//P5 stuff
 	Slider sizeSlider, strSlider;
 	Slider rSlider,gSlider, bSlider;
 	Slider xSlider, ySlider;
 	Button clearGear;
 	Textfield text; 
 	Bang sub; 
+	
+	ArrayList<Gear_New> allGear;
+	
+//	Iterator<Gear_New> itGear = all.Iterator(); 
 	
 	
 	String input; 
@@ -37,10 +44,10 @@ public class mainRun extends PApplet{
     public void setup(){
     	cp5 = new ControlP5(this);    	
     	all = new Gear_New(this, 340, 200, 40, 1);
-    	initUI();
+    	initUI();  
+    	all.setParameter("red", 255);
+    	println("here:  "+ all.getParameter("Width"));
     	
-    	//put this elsewhere later
-  
     }
 
     public void draw(){
@@ -119,17 +126,17 @@ public class mainRun extends PApplet{
     
     public void red(float r) {
 	  if (selected != null) {
-	    selected.cou = color(r, green(selected.cou), blue(selected.cou));
+	    selected.r = r; 
 	  }
     }
     public void green(float g) {
 	  if (selected != null) {
-	    selected.cou = color(red(selected.cou), g, blue(selected.cou));
+	    selected.g = g; 
 	  }
     }
     public void blue(float b) {
 	  if (selected != null) {
-	    selected.cou = color(red(selected.cou), green(selected.cou), b);
+	    selected.b = b; 
 	  }
     }
     
@@ -150,13 +157,13 @@ public class mainRun extends PApplet{
     
     public void mousePressed() {
     	if(mouseX>200) {    		
-    		selected = all.pickMe(mouseX, mouseY);
+    		selected = (Gear_New) all.pick(mouseX, mouseY);
     		if(selected != null) {
     			strSlider.setValue(selected.sw);
     			sizeSlider.setValue(selected.radius);
-    			rSlider.setValue(red(selected.cou));
-    			gSlider.setValue(green(selected.cou));
-    			bSlider.setValue(blue(selected.cou));
+    			rSlider.setValue(selected.r);
+    			gSlider.setValue(selected.g);
+    			bSlider.setValue(selected.b);
     			xSlider.setValue(selected.xPos);
     			ySlider.setValue(selected.yPos);
     			println("Current Gear Name: "+selected.getName()); 

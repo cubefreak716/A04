@@ -12,7 +12,7 @@ public class Factory implements MechanismFactory{
 	
 	
 	public Scrubbable getMechanism(PApplet p) {
-		return null; 
+		return new Gear_New(p,340, 200, 40, 1); 
 	}
 
 }

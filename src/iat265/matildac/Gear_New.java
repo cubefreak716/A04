@@ -1,6 +1,6 @@
 package iat265.matildac;
 
-
+import java.util.ArrayList;
 import java.util.Iterator;
 import iat265.aga53.Scrubbable;
 import processing.core.PApplet;
@@ -12,12 +12,15 @@ public class Gear_New extends PApplet implements Scrubbable {
 	float xPos, yPos; //position of gear
 	PVector pos, end; // 
 	
+	ArrayList<Gear_New> allGear;
+	
 	float rotS; //rotation speed
 	
 	float radius; //width
 	Gear_New left, right; //next gears
-	Belt b; 	//belt
+	Belt B; 	//belt
 	int cou; //colour
+	float r, g, b; 
 	float sw; //stroke weight
 	
 	//for tangency function
@@ -26,48 +29,66 @@ public class Gear_New extends PApplet implements Scrubbable {
 	float y1,y2,y3,y4; // y coordinates of belts
 	float xP, yP; 
 	
-	String [] prop; 
-	int numProp = 8; 
+	String [] properties; 
+	int numProp = 8;  
 	
 	String n ; 
 	
 	public Gear_New(PApplet parent, float x, float y, float r, int depth){
 		
 		n = "Gear" + depth; // name of gear
-		prop = new String[numProp]; 		
+		properties = new String[numProp]; 
+		properties[0] = "LineWeight";
+		properties[1] = "Width";
+		properties[2] = "red";
+		properties[3] = "green";
+		properties[4] = "blue";
+		properties[5] = "XPos";
+		properties[6] = "YPos"; 
+		properties[7] = "Name"; 
 		
 		p = parent;
 		xPos = x;
 		yPos = y;
 		radius = r;
-		cou = color(125);	
+		this.r = 0;
+		this.g = 0; 
+		this.b = 0; 
 		sw = 1; 
 		rotS = 1; 
-
+		
+		//allGear.add(this); 
+				
 		if(depth<4) {
 			//println(depth);
 			if(depth==3) {
 				left = new Gear_New(p,xPos-40,yPos-180, radius, depth+1);
+//				allGear.add(left); 
 			}
 			else if(depth==1) {
 				left = new Gear_New(p,xPos+60,yPos+200, (float) (radius * 0.7), depth+1);
+//				allGear.add(left); 
 			}
 			else if(depth == 2) {
 				left = new Gear_New(p,xPos+120,yPos+50, (float) (radius * 0.5), depth+1);	
+//				allGear.add(left); 
 				right = new Gear_New(p,xPos-80,yPos+120, (float) (radius * 0.5), 5);
+//				allGear.add(right); 
 				
 			}
 			else if(depth == 0) { //first gear
 				left = new Gear_New(p,xPos,yPos, 50, depth+1);
+//				allGear.add(left); 
 				
 			}
 			
 		}
 		
+		
 	}
 	
 	public String getName() {
-		return(n);
+		return(n + "  " );
 		
 	}
 	
@@ -80,11 +101,82 @@ public class Gear_New extends PApplet implements Scrubbable {
 	}
 	
 	public void setParameter(String name, float value) {
+		int c = -1; 
+		for(int i = 0; i<properties.length; i++) {
+			if(name.equals(properties[i])) {
+				println("Found it"); 
+				c = i; 
+			}
+		}
+		
+		switch(c) {
+		  case 0: 
+			  sw = value; 
+		    break;
+		  case 1: 
+			  radius = value; 
+		    break;
+		  case 2: 
+			  r = value;
+		    break;
+		  case 3: 
+			  g = value; 
+		    break;
+		  case 4:
+			  b = value; 
+			 break;
+		  case 5:
+			  xPos = value;
+			  break;
+		  case 6:
+			  yPos = value; 
+			  break;
+		  case 7:
+			  n = str(value); 
+			  break;		
+		  default:             // Default executes if the case labels
+		    println("None");   // don't match the switch parameter
+		    break;
+		}
+
+		
 		
 	}
 	
 	public float getParameter(String name) {
-		return 0; 
+//		properties[0] = "LineWeight";
+//		properties[1] = "Width";
+//		properties[2] = "red";
+//		properties[3] = "green";
+//		properties[4] = "blue";
+//		properties[5] = "XPos";
+//		properties[6] = "YPos"; 
+//		properties[7] = "Name"; 
+		if(name.equals("LineWeight")){
+			return sw;
+		}
+		else if(name.equals("Width")) {
+			return radius;
+		}
+		else if(name.equals("red")) {
+			return r; 
+		}
+		else if(name.equals("green")) {
+			return g; 
+		}
+		else if(name.equals("blue")) {
+			return b; 
+		}
+		else if(name.equals("XPos")) {
+			return xPos; 
+		}
+		else if(name.equals("YPos")) {
+			return yPos;
+		}
+		else {
+			return 0; 
+		}
+		
 	}
 	
 	public void draw() {
@@ -92,7 +184,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 		p.pushStyle();
 			p.translate(xPos, yPos);
 			p.rotate(rotS); 
-			p.stroke(cou); 		
+			p.stroke(r,g,b); 		
 			p.strokeWeight(sw); 
 			p.ellipse(0, 0, 2*radius, 2*radius);
 			p.line(0, 0, radius, 0);
@@ -100,7 +192,7 @@ public class Gear_New extends PApplet implements Scrubbable {
 			p.line(0, 0, -radius, 0);
 			p.line(0, 0, 0, -radius);
 			p.ellipse(0,0,radius,radius);
-			//rotS+= 0.1; 
+			rotS+= 0.1; 
 		p.popStyle();
 		p.popMatrix();
 
@@ -140,7 +232,8 @@ public class Gear_New extends PApplet implements Scrubbable {
 	
 
 	public Iterator createIterator() {
-		return new mIterator();
+//		return null; 
+		return new mIterator(allGear); 
 	}
 	
 	Gear_New pickMe(float MX, float MY) {
