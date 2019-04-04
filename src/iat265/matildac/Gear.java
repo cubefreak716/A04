@@ -74,11 +74,11 @@ public class Gear extends PApplet{
 
 		
 	    if (left != null) {	    	
-	       	tangency(left); 	    	
+//	       	tangency(left); 	    	
 	        left.drawMe();	        
 	    }
 	    if (right!=null) {	    		
-	    	tangency(right); 	    	
+//	    	tangency(right); 	    	
 	        right.drawMe();
 	    }
 
@@ -106,66 +106,66 @@ public class Gear extends PApplet{
 		}
 	}
 	
-	public void tangency(Gear rec) {
-		if(radius == rec.radius) {
-	    	angle = atan((yPos-rec.yPos)/(xPos-rec.xPos));
-	    	
-//	    	println(angle); 
-	    	x1 = xPos+radius*sin(angle);
-	    	x2 = xPos-radius*sin(angle);
-	    	y1 = yPos-radius*cos(angle);
-	    	y2 = yPos+radius*cos(angle);
-	    	
-	    	x3 = rec.xPos+rec.radius*sin(angle);
-	    	x4 = rec.xPos-rec.radius*sin(angle);
-	    	y3 = rec.yPos-rec.radius*cos(angle);
-	    	y4 = rec.yPos+rec.radius*cos(angle);
-	    	
-	    	Belt b1 = new Belt(p, x1,x2,x3,x4,y1,y2,y3,y4); 
-	    	b1.drawMe(); 
-	    	
-		}
-		
-		else{    		
-    		if(radius<rec.radius) {    	    		
-	    		//find intersection point
-	    		xP = (rec.xPos*radius - xPos*rec.radius)/(radius-rec.radius);
-	    		yP = (rec.yPos*radius - yPos*rec.radius)/(radius-rec.radius);
-	    		
-	    		float xF1 = ((pow(radius,2) * (xP-xPos) + (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
-	        	float xF2 = ((pow(radius,2) * (xP-xPos) - (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
-	        	float yF1 = ((pow(radius,2) * (yP-yPos) - (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
-	        	float yF2 = ((pow(radius,2) * (yP-yPos) + (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
-	        	
-	        	float xF3 = ((pow(rec.radius,2) * (xP-rec.xPos) + (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
-	        	float xF4 = ((pow(rec.radius,2) * (xP-rec.xPos) - (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
-	        	float yF3 = ((pow(rec.radius,2) * (yP-rec.yPos) - (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
-	        	float yF4 = ((pow(rec.radius,2) * (yP-rec.yPos) + (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
-	        	
-	        	Belt b1 = new Belt(p, xF1,xF2,xF3,xF4,yF1,yF2,yF3,yF4); 
-		    	b1.drawMe();         	
-    		}
-    		if(radius > rec.radius) {
-	    		//find intersection point
-	    		xP = (xPos*rec.radius - rec.xPos*radius)/(rec.radius-radius);
-	    		yP = (yPos*rec.radius - rec.yPos*radius)/(rec.radius-radius);
-	    		
-	    		float xF1 = ((pow(rec.radius,2) * (xP-rec.xPos) + (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
-	        	float xF2 = ((pow(rec.radius,2) * (xP-rec.xPos) - (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
-	        	float yF1 = ((pow(rec.radius,2) * (yP-rec.yPos) - (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
-	        	float yF2 = ((pow(rec.radius,2) * (yP-rec.yPos) + (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
-	        	
-	        	float xF3 = ((pow(radius,2) * (xP-xPos) + (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
-	        	float xF4 = ((pow(radius,2) * (xP-xPos) - (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
-	        	float yF3 = ((pow(radius,2) * (yP-yPos) - (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
-	        	float yF4 = ((pow(radius,2) * (yP-yPos) + (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
-	        	        	
-	
-	        	Belt b1 = new Belt(p, xF1,xF2,xF3,xF4,yF1,yF2,yF3,yF4); 
-		    	b1.drawMe();    	
-    		}
-    	}
-	}//end of tangency
-	
+//	public void tangency(Gear rec) {
+//		if(radius == rec.radius) {
+//	    	angle = atan((yPos-rec.yPos)/(xPos-rec.xPos));
+//	    	
+////	    	println(angle); 
+//	    	x1 = xPos+radius*sin(angle);
+//	    	x2 = xPos-radius*sin(angle);
+//	    	y1 = yPos-radius*cos(angle);
+//	    	y2 = yPos+radius*cos(angle);
+//	    	
+//	    	x3 = rec.xPos+rec.radius*sin(angle);
+//	    	x4 = rec.xPos-rec.radius*sin(angle);
+//	    	y3 = rec.yPos-rec.radius*cos(angle);
+//	    	y4 = rec.yPos+rec.radius*cos(angle);
+//	    	
+//	    	Belt b1 = new Belt(p, x1,x2,x3,x4,y1,y2,y3,y4); 
+//	    	b1.drawMe(); 
+//	    	
+//		}
+//		
+//		else{    		
+//    		if(radius<rec.radius) {    	    		
+//	    		//find intersection point
+//	    		xP = (rec.xPos*radius - xPos*rec.radius)/(radius-rec.radius);
+//	    		yP = (rec.yPos*radius - yPos*rec.radius)/(radius-rec.radius);
+//	    		
+//	    		float xF1 = ((pow(radius,2) * (xP-xPos) + (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
+//	        	float xF2 = ((pow(radius,2) * (xP-xPos) - (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
+//	        	float yF1 = ((pow(radius,2) * (yP-yPos) - (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
+//	        	float yF2 = ((pow(radius,2) * (yP-yPos) + (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
+//	        	
+//	        	float xF3 = ((pow(rec.radius,2) * (xP-rec.xPos) + (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
+//	        	float xF4 = ((pow(rec.radius,2) * (xP-rec.xPos) - (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
+//	        	float yF3 = ((pow(rec.radius,2) * (yP-rec.yPos) - (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
+//	        	float yF4 = ((pow(rec.radius,2) * (yP-rec.yPos) + (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
+//	        	
+//	        	Belt b1 = new Belt(p, xF1,xF2,xF3,xF4,yF1,yF2,yF3,yF4); 
+//		    	b1.drawMe();         	
+//    		}
+//    		if(radius > rec.radius) {
+//	    		//find intersection point
+//	    		xP = (xPos*rec.radius - rec.xPos*radius)/(rec.radius-radius);
+//	    		yP = (yPos*rec.radius - rec.yPos*radius)/(rec.radius-radius);
+//	    		
+//	    		float xF1 = ((pow(rec.radius,2) * (xP-rec.xPos) + (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
+//	        	float xF2 = ((pow(rec.radius,2) * (xP-rec.xPos) - (rec.radius*(yP-rec.yPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.xPos;
+//	        	float yF1 = ((pow(rec.radius,2) * (yP-rec.yPos) - (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
+//	        	float yF2 = ((pow(rec.radius,2) * (yP-rec.yPos) + (rec.radius*(xP-rec.xPos)) * sqrt(pow((xP-rec.xPos),2) + pow((yP-rec.yPos),2)-pow(rec.radius,2)))/(pow(xP-rec.xPos,2) + pow(yP-rec.yPos,2))) + rec.yPos;
+//	        	
+//	        	float xF3 = ((pow(radius,2) * (xP-xPos) + (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
+//	        	float xF4 = ((pow(radius,2) * (xP-xPos) - (radius*(yP-yPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + xPos;
+//	        	float yF3 = ((pow(radius,2) * (yP-yPos) - (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
+//	        	float yF4 = ((pow(radius,2) * (yP-yPos) + (radius*(xP-xPos)) * sqrt(pow((xP-xPos),2) + pow((yP-yPos),2)-pow(radius,2)))/(pow(xP-xPos,2) + pow(yP-yPos,2))) + yPos;
+//	        	        	
+//	
+//	        	Belt b1 = new Belt(p, xF1,xF2,xF3,xF4,yF1,yF2,yF3,yF4); 
+//		    	b1.drawMe();    	
+//    		}
+//    	}
+//	}//end of tangency
+//	
 	
 }
