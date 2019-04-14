@@ -9,23 +9,23 @@ import controlP5.*;
 
 public class mainRun extends PApplet{
 	
+	//Mechanism parts
 	Gear_New all; 
+	Belt allB; 
 	Gear_New selected; 
-	ControlP5 cp5;	
+	Belt selected2; 	
 	
 	//P5 stuff
+	ControlP5 cp5;	
 	Slider sizeSlider, strSlider;
 	Slider rSlider,gSlider, bSlider;
 	Slider xSlider, ySlider;
 	Button clearGear;
-	Textfield text; 
-	Bang sub; 
 	
-	ArrayList<Gear_New> allGear;
-	
-//	Iterator<Gear_New> itGear = all.Iterator(); 
-	
+	//For textfield
 	String input; 
+	
+	Boolean onScreen = false; 
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -37,14 +37,32 @@ public class mainRun extends PApplet{
     }
 
     public void setup(){
+    	//Setup cp5
     	cp5 = new ControlP5(this);    	
+    	//declare mechanism
     	all = new Gear_New(this, 340, 200, 40, 1);
+    	allB = new Belt(this, all, all.left, 1); 
+    	//Initialize cp5 ui
     	initUI();  
+    	
+    	//Testing methods for parts
     	all.setParameter("red", 255);
-    	println("here:  "+ all.getParameter("Width"));
-    	println("length: " + all.getProperties().length) ;
-    	for(int o= 0; o <all.getProperties().length; o++) {
-    		println("Property " + (o+1) + "  " + all.getProperties()[o]); 
+//    	println("here:  "+ all.getParameter("Width"));
+//    	println("length: " + all.getProperties().length) ;
+//    	for(int o= 0; o <all.getProperties().length; o++) {
+//    		println("Property " + (o+1) + "  " + all.getProperties()[o]); 
+//    	}
+    	
+    	//Iterator testing
+    	Iterator it = all.createIterator(); 
+    	while(it.hasNext()) {
+    		Gear_New current = (Gear_New)it.next(); 
+    		println("oh boy   "+ current.getName()); 
+    	}
+    	Iterator it2 = allB.createIterator();
+    	while(it2.hasNext()) {
+    		Belt curr = (Belt)it2.next();
+    		println("bletss  " + curr.getName());
     	}
     	
     }
@@ -54,6 +72,7 @@ public class mainRun extends PApplet{
     	
     	//draw gears
     	all.draw(); 
+    	allB.draw();
     	
     	//draw side bar
     	pushStyle();
@@ -115,6 +134,9 @@ public class mainRun extends PApplet{
     	if(selected != null) {
     		selected.sw = sW; 
     	}
+    	if(selected2 != null) {
+    		selected2.sw = sW; 
+    	}
     }
     
     public void radius(float ra) {
@@ -127,15 +149,24 @@ public class mainRun extends PApplet{
 	  if (selected != null) {
 	    selected.r = r; 
 	  }
+	  if (selected2 != null) {
+		    selected2.r = r; 
+	  }
     }
     public void green(float g) {
 	  if (selected != null) {
 	    selected.g = g; 
 	  }
+	  if (selected2 != null) {
+		    selected2.g = g; 
+	  }
     }
     public void blue(float b) {
 	  if (selected != null) {
 	    selected.b = b; 
+	  }
+	  if (selected2 != null) {
+		    selected2.b = b; 
 	  }
     }
     
@@ -157,6 +188,7 @@ public class mainRun extends PApplet{
     public void mousePressed() {
     	if(mouseX>200) {    		
     		selected = (Gear_New) all.pick(mouseX, mouseY);
+    		selected2 = (Belt)allB.pick(mouseX, mouseY); 
     		if(selected != null) {
     			strSlider.setValue(selected.sw);
     			sizeSlider.setValue(selected.radius);
@@ -167,6 +199,13 @@ public class mainRun extends PApplet{
     			ySlider.setValue(selected.yPos);
     			println("Current Gear Name: "+selected.getName()); 
     			
+    		}
+    		if(selected2 != null) {
+    			strSlider.setValue(selected2.sw);
+    			rSlider.setValue(selected2.r);
+    			gSlider.setValue(selected2.g);
+    			bSlider.setValue(selected2.b);
+    			println("Current Belt name: " + selected2.getName());
     		}
     	}
     }
